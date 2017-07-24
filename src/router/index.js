@@ -17,7 +17,7 @@ export default new Router({
   routes: [
     {
       path: '/Home',
-      name: '我的网店',
+      name: 'Dalin',
       component: Home
     }
     // ,

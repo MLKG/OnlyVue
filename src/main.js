@@ -38,7 +38,7 @@ router.afterEach(function (transition) {
   if (transition.name) {
     document.title = transition.name
   } else {
-    document.title = '我的网店'
+    document.title = 'Dalin'
   }
 
   // 微信的默认分享

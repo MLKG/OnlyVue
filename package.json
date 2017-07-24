@@ -1,8 +1,8 @@
 {
-  "name": "vue-shop-2.0",
+  "name": "vue-2.0",
   "version": "1.0.0",
   "description": "A Vue.js project",
-  "author": "wangxu <ttian226@gmail.com>",
+  "author": "MLKG <1059158548@qq.com>",
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
@@ -10,7 +10,6 @@
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
-    "bootstrap": "^3.3.7",
     "vue": "^2.1.10",
     "vue-resource": "^1.2.0",
     "vue-router": "^2.2.0",
