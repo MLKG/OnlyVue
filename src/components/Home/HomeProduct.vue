@@ -22,7 +22,7 @@
         <div class="title">商城</div>
       </div>
     </div>
-    <div class="home-product__list" v-for="n in 20">
+    <div class="home-product__list" v-for="n in 8">
       <div class="left">
         <div class="title">锤子员工爆料坚果Pro销量 和官方差的不少</div>
         <div class="font-color-gray"><span>评论18</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>2小时前</span></div>

@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <router-view @setMessage="showMessage"></router-view>
+    <common-loading></common-loading>
     <transition name="fade">
       <common-message :message="msg" v-show="msgShow"></common-message>
     </transition>
@@ -8,10 +9,12 @@
 </template>
 
 <script>
+  import CommonLoading from 'components/Common/CommonLoading'
   import CommonMessage from 'components/Common/CommonMessage'
 
   export default {
     components: {
+      CommonLoading,
       CommonMessage
     },
     data () {

@@ -41,16 +41,20 @@ Vue.http.interceptors.push((request, next) => {
 })
 
 // 通用的接口请求
-vuePrototype._post = function (vm, json, callback, way = 'service.do') {
+vuePrototype._post = function (vm, json, callback, way = 'service.do', pop = true) {
   if (vm instanceof Vue !== true) {
     return
   }
-
+  let el = document.querySelector('#loadingPopup')
+  pop && el && el.classList.remove('hide')
   vm.$http.post(httpUrl + way, json).then(function (response) {
+    pop && el && el.classList.add('hide')
     if (typeof callback === 'function') {
+      // 处理各种情况
       if (response.body.SESSION_TIMEOUT) {
         router.push('/login')
       } else {
+        // 回调数据
         callback(response.body.RETURN)
       }
     }
@@ -61,6 +65,8 @@ vuePrototype._initWeixin = function (vm, callback) {
   if (vm instanceof Vue !== true) {
     return
   }
+
+  // 微信授权接口
   vm.$http.post(httpUrl + 'weixin/initShare.do', {URL: location.href.split('#')[0]}).then(function (response) {
     if (typeof callback === 'function') {
       callback(response.body)
@@ -69,19 +75,22 @@ vuePrototype._initWeixin = function (vm, callback) {
 }
 
 // 获取用户信息
-vuePrototype._getUserInfo = function (vm, callback) {
+vuePrototype._getUserInfo = function (vm, callback, pop = true) {
   if (vm instanceof Vue !== true) {
     return
   }
   if (window._userInfoData) {
     typeof callback === 'function' && callback(window._userInfoData)
   } else {
+    let el = document.querySelector('#loadingPopup')
+    pop && el && el.classList.remove('hide')
     vm.$http.post(httpUrl + 'service.do', {SERVERID: '999999', KEY: 'Y'}, {emulateJSON: true}).then(function (response) {
+      pop && el && el.classList.add('hide')
       if (typeof callback === 'function') {
         let userInfo = response.body.RETURN
         let newData = {}
         if (userInfo && userInfo.STATUS !== '4') {
-          newData.isNotLogin = false   // 已登录
+          newData.isLogin = true   // 已登录
           if (userInfo.REALNAME) {
             newData.userNameTitle = userInfo.REALNAME
           } else if (userInfo.USER_NAME) {
@@ -106,7 +115,7 @@ vuePrototype._getUserInfo = function (vm, callback) {
           newData.userIdForActivity = userInfo.USER_RCODE  // 用户加密ID
           newData.riskType = userInfo.FUND_RESK // 基金的风险等级
         } else {
-          newData.isNotLogin = true   // 未登录
+          newData.isLogin = false   // 未登录
           newData.MSG = userInfo.MSG
         }
         window._userInfoData = newData

@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+// 登陆页面
 import Login from 'components/Login/index'
+// 首页
 import Home from 'components/Home/index'
 
 Vue.use(Router)
