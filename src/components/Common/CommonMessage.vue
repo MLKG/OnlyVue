@@ -1,7 +1,7 @@
 <template>
-  <div class="common-message">
-    <div class="common-message__cell">
-      <span class="common-message__text">{{ message }}</span>
+  <div class="common-loading">
+    <div class="common-loading_cell">
+      <span class="common-loading_text">{{ message }}</span>
     </div>
   </div>
 </template>
@@ -12,26 +12,31 @@
   }
 </script>
 
-<style lang="less">
-  .common-message {
-    position: absolute;
+<style lang="less" scoped>
+  .common-loading {
+    position: fixed;
     width: 100%;
     height: 100%;
     top: 0;
     left: 0;
-    display: table;
+    z-index: 1;
+    bottom: 0;
+    right: 0;
 
-    &__cell {
-      display: table-cell;
-      vertical-align: middle;
+    &_cell {
+      position: fixed;
       text-align: center;
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 3rem;
     }
 
-    &__text {
+    &_text {
       background: rgba(0, 0, 0, 0.5);
       border-radius: 5px;
       color: #fff;
-      padding: .7rem 1.4rem;
+      padding: .2rem .4rem;
     }
   }
 </style>

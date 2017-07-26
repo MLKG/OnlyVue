@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view @setMessage="setMessage"></router-view>
+    <router-view @setMessage="showMessage"></router-view>
     <transition name="fade">
       <common-message :message="msg" v-show="msgShow"></common-message>
     </transition>
@@ -11,7 +11,6 @@
   import CommonMessage from 'components/Common/CommonMessage'
 
   export default {
-    name: 'app',
     components: {
       CommonMessage
     },
@@ -22,12 +21,12 @@
       }
     },
     methods: {
-      setMessage (msg) {
+      showMessage (msg) {
         this.msg = msg
         this.msgShow = true
         setTimeout(() => {
           this.msgShow = false
-        }, 1000)
+        }, 2000)
       }
     }
   }

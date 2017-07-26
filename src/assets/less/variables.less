@@ -1,40 +1,49 @@
 // 字体大小
-@font-size-base: 1rem;
+@font-size-base: 0.28rem;
+@font-size-smallest: @font-size-base * 0.86;
+@font-size-smaller: @font-size-base * 0.93;
+@font-size-small: @font-size-base * 1.1;
 @font-size-medium: @font-size-base * 1.14;
 @font-size-large: @font-size-base * 1.21;
 @font-size-larger: @font-size-base * 1.29;
 @font-size-largest: @font-size-base * 1.4;
-@font-size-small: @font-size-base * 0.93;
-@font-size-smaller: @font-size-base * 0.86;
-@font-size-litter: @font-size-base * 1.10;
 @font-size-big: @font-size-base * 1.60;
 @font-size-bigger: @font-size-base * 1.80;
+@font-size-biggest: @font-size-base * 2.14;
+@font-size-very: @font-size-base * 2.6;
+@font-size-max: @font-size-base * 2.8;
 
 // 字体颜色
 @font-color-base:   #333333;
+@font-color-ashy:   #666666;
 @font-color-gray:   #7D7D7D;
-@font-color-red:    #EA544A;
+@font-color-red:    #E94543;
 @font-color-blue:   #42AEF6;
 @font-color-orange: #FF820F;
 @font-color-white: #FFFFFF;
 @font-color-yellowish: #FFBA29;
+
+// 前景色
+@bg-white: #FFFFFF;
+@bg-red: #E94543;
+@bg-pink: rgba(255, 92, 88, 0.06);
+@bg-yellow: #FCF4E6;
+@bg-gray: #DCDCDC;
+@bg-gray-light: #EEEEEE;
+@bg-gray-hight: #C0C0C0;
+@bg-gray-dark: #CDCDCD;
+@bg-orange: #FF903F;
+@bg-yellowish: #FFBA29;
+@bg-redlight: #FFF3F2;
+@bg-yellowlight: #FFF8EE;
+@bg-black: #000000;
+@bg-light-pink: #FFF1EB;
 
 // 分割线颜色
 @line-color:  #DDDDDD;
 
 // 底色
 @bg-color:    #F0EFF5;
-
-// 前景色
-@bg-white: #FFFFFF;
-@bg-red: #FF5C58;
-@bg-pink: rgba(255, 92, 88, 0.06);
-@bg-yellow: #FCF4E6;
-@bg-gray: #DCDCDC;
-@bg-orange: #FF903F;
-@bg-yellowish: #FFBA29;
-@bg-redlight: #FFF3F2;
-@bg-yellowlight: #FFF8EE;
 
 
 .font-color-base {
@@ -61,6 +70,10 @@
   color: @font-color-white;
 }
 
+.font-size-base {
+  font-size: @font-size-base;
+}
+
 .font-size-medium {
   font-size: @font-size-medium;
 }
@@ -85,8 +98,8 @@
   font-size: @font-size-smaller;
 }
 
-.font-size-litter{
-  font-size: @font-size-litter;
+.font-size-smallest{
+  font-size: @font-size-smallest;
 }
 
 .font-size-big{
@@ -97,10 +110,25 @@
   font-size: @font-size-bigger;
 }
 
+.font-size-biggest{
+  font-size: @font-size-biggest;
+}
+
+.font-size-very{
+  font-size: @font-size-very;
+}
+
+.font-size-max{
+  font-size: @font-size-max;
+}
+
+.font-bold {
+  font-weight: 500;
+}
+
 .transform-rotate (@deg) {
   -webkit-transform: rotate(@deg);
   -moz-transform:    rotate(@deg);
   -ms-transform:     rotate(@deg);
   -o-transform:      rotate(@deg);
 }
-
