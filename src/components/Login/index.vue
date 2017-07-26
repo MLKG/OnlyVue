@@ -19,9 +19,9 @@
           <img src="../../assets/images/eye-open.png" class="eye-open" @click="togglePwd" v-show="showPwd">
           <img src="../../assets/images/X.png" class="clearPwd" @click="clearPwd" v-show="password">
         </div>
-        <button type="submit" class="loginBtn" :disabled="!isDisabled" v-show="!userInfoData.isLogin">登&nbsp;录</button>
+        <button type="submit" class="loginBtn" :disabled="!isDisabled" v-show="!isLogin">登&nbsp;录</button>
       </form>
-      <button type="button" class="loginOutBtn" @click="loginOut" v-show="userInfoData.isLogin">注&nbsp;销</button>
+      <button type="button" class="loginOutBtn" @click="loginOut" v-show="isLogin">注&nbsp;销</button>
       <div class="bottom"></div>
     </div>
   </div>
@@ -68,7 +68,6 @@
           if (response.FLAG === 'T') {
             // 信息提示
             this.$emit('setMessage', '登录成功')
-
             this.isLogin = true
             window._userInfoData = null
           } else {
@@ -88,7 +87,7 @@
     },
     mounted () {
       this._getUserInfo(this, (data) => {
-        console.log(data)
+        this.isLogin = data.isLogin
       })
     }
   }
