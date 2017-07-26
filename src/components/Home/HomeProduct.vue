@@ -40,6 +40,11 @@
       goProduct (productId) {
         this.$router.push({path: '/product', query: {productId: productId}})
       }
+    },
+    mounted () {
+      this._getUserInfo(this, (data) => {
+        console.log(data)
+      })
     }
   }
 </script>

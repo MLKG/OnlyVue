@@ -16,7 +16,10 @@ export default new Router({
     {
       path: '/index',
       name: 'Dalin',
-      component: Home
+      component: Home,
+      meta: {
+        requiresLogin: true
+      }
     },
     {
       path: '/Login',

@@ -2,7 +2,11 @@
 import Vue from 'vue'
 import router from '../router'
 import VueResource from 'vue-resource'
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+// use vue-resource
 Vue.use(VueResource)
+// use vue-awesome-swiper
+Vue.use(VueAwesomeSwiper)
 
 Vue.http.options.emulateJSON = true
 Vue.http.options.headers = {
@@ -22,7 +26,7 @@ if (httpOrigin.indexOf('localhost:8888') > -1) { // 本地调试URL
 }
 
 // 存储用户信息
-window._userInfoData = null
+window.userInfoData = null
 
 Vue.http.interceptors.push((request, next) => {
   // 解决跨域传递cookie问题
@@ -38,6 +42,26 @@ Vue.http.interceptors.push((request, next) => {
     request.body = array.join('&')
   }
   next()
+})
+
+document.addEventListener('DOMContentLoaded', function () {
+  let width = document.documentElement.clientWidth
+  document.documentElement.style.fontSize = width < 1080 ? width / 7.5 + 'px' : '144px'
+  document.documentElement.setAttribute('data-dpr', window.devicePixelRatio)
+})
+
+window.addEventListener('resize', function () {
+  let width = document.documentElement.clientWidth
+  document.documentElement.style.fontSize = width < 1080 ? width / 7.5 + 'px' : '144px'
+})
+
+router.afterEach(function (transition) {
+  // console.log(transition.name)
+  if (transition.name) {
+    document.title = transition.name
+  } else {
+    document.title = 'Dalin'
+  }
 })
 
 // 通用的接口请求
@@ -61,26 +85,14 @@ vuePrototype._post = function (vm, json, callback, way = 'service.do', pop = tru
   })
 }
 
-vuePrototype._initWeixin = function (vm, callback) {
-  if (vm instanceof Vue !== true) {
-    return
-  }
-
-  // 微信授权接口
-  vm.$http.post(httpUrl + 'weixin/initShare.do', {URL: location.href.split('#')[0]}).then(function (response) {
-    if (typeof callback === 'function') {
-      callback(response.body)
-    }
-  })
-}
-
 // 获取用户信息
 vuePrototype._getUserInfo = function (vm, callback, pop = true) {
   if (vm instanceof Vue !== true) {
     return
   }
-  if (window._userInfoData) {
-    typeof callback === 'function' && callback(window._userInfoData)
+  if (window.userInfoData) {
+    routerCtr()
+    typeof callback === 'function' && callback(window.userInfoData)
   } else {
     let el = document.querySelector('#loadingPopup')
     pop && el && el.classList.remove('hide')
@@ -118,9 +130,25 @@ vuePrototype._getUserInfo = function (vm, callback, pop = true) {
           newData.isLogin = false   // 未登录
           newData.MSG = userInfo.MSG
         }
-        window._userInfoData = newData
+        window.userInfoData = newData
+        routerCtr()
         callback(newData)
       }
     })
   }
+}
+
+function routerCtr () {
+  router.beforeEach((to, from, next) => {
+    if (to.meta.requiresLogin) {
+      console.log(window.userInfoData)
+      if (!window.userInfoData.isLogin) {
+        next({path: '/login'})
+      } else {
+        next()
+      }
+    } else {
+      next()
+    }
+  })
 }
