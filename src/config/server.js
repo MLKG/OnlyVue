@@ -85,6 +85,31 @@ vuePrototype._post = function (vm, json, callback, way = 'service.do', pop = tru
   })
 }
 
+vuePrototype._allPost = function (vm, arrayList, callback, way = 'service.do', pop = true) {
+  if (vm instanceof Vue !== true) {
+    return
+  }
+  let el = document.querySelector('#loadingPopup')
+  pop && el && el.classList.remove('hide')
+  let promises = []
+  for (let i of arrayList) {
+    promises.push(vm.$http.post(httpUrl + way, i))
+  }
+  Promise.all(promises).then(function (response) {
+    pop && el && el.classList.add('hide')
+    let newArray = []
+    for (let res of response) {
+      console.log(res)
+      if (res.data.SESSION_TIMEOUT) {
+        router.push('/login')
+        return
+      }
+      newArray.push(res.data.RETURN)
+    }
+    callback(newArray)
+  })
+}
+
 // 获取用户信息
 vuePrototype._getUserInfo = function (vm, callback, pop = true) {
   if (vm instanceof Vue !== true) {
@@ -141,7 +166,6 @@ vuePrototype._getUserInfo = function (vm, callback, pop = true) {
 function routerCtr () {
   router.beforeEach((to, from, next) => {
     if (to.meta.requiresLogin) {
-      console.log(window.userInfoData)
       if (!window.userInfoData.isLogin) {
         next({path: '/login'})
       } else {

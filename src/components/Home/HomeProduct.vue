@@ -42,7 +42,8 @@
       }
     },
     mounted () {
-      this._getUserInfo(this, (data) => {
+      let paramList = [{'SERVERID': 22110001, 'isUsed': 0, 'isOverDate': 0, 'CardType': '4'}, {'SERVERID': 50000001}]
+      this._allPost(this, paramList, (data) => {
         console.log(data)
       })
     }

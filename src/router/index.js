@@ -18,7 +18,7 @@ export default new Router({
       name: 'Dalin',
       component: Home,
       meta: {
-        requiresLogin: true
+        requiresLogin: false
       }
     },
     {
