@@ -9,6 +9,7 @@ Vue.use(VueResource)
 Vue.use(VueAwesomeSwiper)
 
 Vue.http.options.emulateJSON = true
+Vue.http.options.credentials = true
 Vue.http.options.headers = {
   'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
 }
@@ -20,7 +21,7 @@ let httpUrl = 'https://wwww.puyitou.com/wechat/'
 vuePrototype.systemUrl = 'https://www.puyitou.com/'    // systemUrl
 
 if (httpOrigin.indexOf('localhost:8888') > -1) { // 本地调试URL
-  httpUrl = 'http://localhost:8888/api/'
+  httpUrl = 'http://localhost:8888/proxy/api/'
   // systemUrl
   vuePrototype.systemUrl = 'https://www.puyitou.com/'
 }
@@ -110,6 +111,30 @@ vuePrototype._allPost = function (vm, arrayList, callback, way = 'service.do', p
   })
 }
 
+vuePrototype._fetch = function (path, json, pop = true) {
+  let el = document.querySelector('#loadingPopup')
+  pop && el && el.classList.remove('hide')
+  return Vue.http.post(httpUrl + path, json)
+    .then(res => Promise.resolve(res.body))
+    .catch(err => {
+      // 如果未登录，则接口返回401
+      if (err.body.errorCode === 401) {
+        router.push('/login')
+      // 无访问权限，则接口返回403
+      } else if (err.body.errorCode === 403) {
+        router.push('/index')
+      // 网络出错，则status===500
+      } else if (err.status === 500) {
+      // do something
+      // 其他错误进行统一处理
+      } else {
+        // console.log(err.body)
+        return Promise.reject(err.body)
+      }
+    })
+    .finally(() => pop && el && el.classList.add('hide'))
+}
+
 // 获取用户信息
 vuePrototype._getUserInfo = function (vm, callback, pop = true) {
   if (vm instanceof Vue !== true) {
@@ -176,3 +201,5 @@ function routerCtr () {
     }
   })
 }
+
+export default vuePrototype._fetch

@@ -59,39 +59,67 @@
         this.showPwd = !this.showPwd
       },
       loginInClick () {
+        // let param = {
+        //   SERVERID: '3000001',
+        //   LOGIN_INFO: this.phoneNo,
+        //   LOGPWD: this.password
+        // }
+        // this._post(this, param, (response) => {
+        //   if (response.FLAG === 'T') {
+        //     // 信息提示
+        //     this.$emit('setMessage', '登录成功')
+        //     this.isLogin = true
+        //     window._userInfoData = null
+        //   } else {
+        //     // 信息提示
+        //     this.$emit('setMessage', response.MSG)
+        //   }
+        // }, 'login.do')
+
         let param = {
-          SERVERID: '3000001',
-          LOGIN_INFO: this.phoneNo,
-          LOGPWD: this.password
+          username: this.phoneNo,
+          password: this.password,
+          checkCode: ''
         }
-        this._post(this, param, (response) => {
-          if (response.FLAG === 'T') {
-            // 信息提示
-            this.$emit('setMessage', '登录成功')
-            this.isLogin = true
-            window._userInfoData = null
-          } else {
-            // 信息提示
-            this.$emit('setMessage', response.MSG)
-          }
-        }, 'login.do')
+        this._fetch('auth/login', param).then((res) => {
+          this.isLogin = true
+          this.$emit('setMessage', res.message)
+          this._fetch('auth/me').then((res) => {
+            // console.log(res)
+            window.userInfoData = res.data.user
+          })
+        }, (err) => {
+          this.$emit('setMessage', err.message)
+        })
       },
       loginOut () {
-        this._removeCookie('JSESSIONID')
-        this._removeCookie('PJSESSIONID')
-        this.isLogin = false
-        window._userInfoData = null
-        // 信息提示
-        this.$emit('setMessage', '注销成功')
+        // this._removeCookie('JSESSIONID')
+        // this._removeCookie('PJSESSIONID')
+        // this.isLogin = false
+        // window._userInfoData = null
+        // // 信息提示
+        // this.$emit('setMessage', '注销成功')
+        this._fetch('auth/logout').then((res) => {
+          this.isLogin = false
+          this.$emit('setMessage', res.message)
+          window.userInfoData = {
+            login: false
+          }
+        })
       }
     },
     mounted () {
-      this._getUserInfo(this, (data) => {
-        this.isLogin = data.isLogin
-      })
-      let paramList = [{'SERVERID': 22110001, 'isUsed': 0, 'isOverDate': 0, 'CardType': '4'}, {'SERVERID': 50000001}]
-      this._allPost(this, paramList, (data) => {
-        console.log(data)
+      // this._getUserInfo(this, (data) => {
+      //   this.isLogin = data.isLogin
+      // })
+      // let paramList = [{'SERVERID': 22110001, 'isUsed': 0, 'isOverDate': 0, 'CardType': '4'}, {'SERVERID': 50000001}]
+      // this._allPost(this, paramList, (data) => {
+      //   console.log(data)
+      // })
+      this._fetch('auth/isLogin').then((res) => {
+        if (res.data.login) {
+          this.isLogin = true
+        }
       })
     }
   }

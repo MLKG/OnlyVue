@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 
 // init config
+import './config/init'
 import './config/server'
 import './config/global'
 import './config/filters'
