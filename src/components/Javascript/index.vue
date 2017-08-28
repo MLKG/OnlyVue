@@ -139,6 +139,14 @@
       console.log(foo1)
 
       // Functions
+      let test
+      let currentUser = true
+      if (currentUser) {
+        test = () => {
+          console.log('Yup')
+        }
+      }
+      test()
     }
   }
 </script>
