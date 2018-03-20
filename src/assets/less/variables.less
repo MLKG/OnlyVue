@@ -126,9 +126,48 @@
   font-weight: 500;
 }
 
+.shadow {
+  top: 0;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #000;
+  opacity: .5;
+  z-index: 1;
+}
+
 .transform-rotate (@deg) {
   -webkit-transform: rotate(@deg);
   -moz-transform:    rotate(@deg);
   -ms-transform:     rotate(@deg);
   -o-transform:      rotate(@deg);
+}
+
+.translate-slide {
+  &-enter,&-leave-active {
+    transform: translateY(100%);
+  }
+
+  &-enter-active {
+    transition: all 0.15s linear;
+  }
+
+  &-leave-active {
+    transition: all 0.15s linear;
+  }
+}
+
+.shadow-fade {
+  &-enter,&-leave-active {
+    opacity: 0;
+  }
+
+  &-enter-active {
+    transition: all 0.15s linear;
+  }
+
+  &-leave-active {
+    transition: all 0.15s linear;
+  }
 }

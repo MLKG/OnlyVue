@@ -14,7 +14,7 @@
         <label for="pwd">登录密码</label>
         <div class="inputbox">
           <input ref="pwdInputHide" type="password" name="pwd" id="pwd" v-show="!showPwd" v-model="password">
-          <input ref="pwdInputShow" type="text" name="pwd" id="pwd" v-show="showPwd" v-model="password">
+          <input ref="pwdInputShow" type="text" name="pwd" v-show="showPwd" v-model="password">
           <img src="../../assets/images/eye-close.png" class="eye-close" @click="togglePwd" v-show="!showPwd">
           <img src="../../assets/images/eye-open.png" class="eye-open" @click="togglePwd" v-show="showPwd">
           <img src="../../assets/images/X.png" class="clearPwd" @click="clearPwd" v-show="password">
