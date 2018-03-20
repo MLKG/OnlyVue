@@ -12,7 +12,8 @@
           v-text="getOptionText(option)"
           :key="index"
           :class="{'v-picker-column--disabled': isDisabled(option), 'v-picker-column--selected': index === currentIndex}"
-          @click="setIndex(index, true, option)"></li>
+          @click="setIndex(index, true)">
+      </li>
     </ul>
   </div>
 </template>

@@ -4,12 +4,12 @@
       <div class="v-picker" v-show="shadow">
         <div class="v-picker__toolbar v-hairline--top-bottom" v-if="showToolbar">
           <slot>
-            <div class="v-picker__cancel" @click="emit('cancel')">{{ cancelButtonText}}</div>
-            <div class="v-picker__confirm" @click="emit('confirm')">{{ confirmButtonText}}</div>
-            <div class="v-picker__title" v-if="title" v-text="title"></div>
+            <div class="v-picker_cancel" @click="emit('cancel')">{{ cancelButtonText}}</div>
+            <div class="v-picker_confirm" @click="emit('confirm')">{{ confirmButtonText}}</div>
+            <div class="v-picker_title" v-if="title" v-text="title"></div>
           </slot>
         </div>
-        <div class="v-picker__columns" @touchmove.prevent>
+        <div class="v-picker_columns" @touchmove.prevent>
           <picker-column
             v-for="(item, index) in currentColumns"
             :key="index"
@@ -23,7 +23,7 @@
             @change="onChange(index)"
             @click="onClick(index)"
           />
-          <div class="v-picker__frame v-hairline--top-bottom" :style="frameStyle"></div>
+          <div class="v-picker_frame v-hairline--top-bottom" :style="frameStyle"></div>
         </div>
       </div>
     </transition>
@@ -61,10 +61,10 @@
         type: String,
         default: 'text'
       },
-      itemHeight: {
-        type: Number,
-        default: 44
-      },
+      // itemHeight: {
+      //   type: Number,
+      //   default: 44
+      // },
       columns: {
         type: Array,
         default: () => []
@@ -78,35 +78,34 @@
         currentColumns: []
       }
     },
-
+    // 初始化
     created () {
       this.initColumns()
     },
-
     watch: {
       columns: {
-        handler (newvalue, old) {
+        handler () {
           this.initColumns()
         },
         deep: true
       }
     },
-
     computed: {
+      itemHeight () {
+        const width = document.documentElement.clientWidth
+        return 0.88 * (width < 1080 ? width / 7.5 : 144)
+      },
       frameStyle () {
         return {
           height: this.itemHeight + 'px'
         }
       }
     },
-
     methods: {
       initColumns () {
         const columns = this.columns
-        console.log(this.columns)
         this.isSimpleColumn = columns.length && !columns[0].values
         this.currentColumns = this.isSimpleColumn ? [{ values: columns }] : columns
-        console.log(this.currentColumns)
       },
       emit (event) {
         if (this.isSimpleColumn) {
@@ -221,36 +220,36 @@
     z-index: 2;
 
     &__toolbar {
-      height: .8rem;
-      line-height: .8rem;
+      height: .88rem;
+      line-height: .88rem;
     }
 
-    &__cancel, &__confirm {
+    &_cancel, &_confirm {
       color: #42AEF6;
       padding: 0 .2rem;
     }
 
-    &__cancel {
+    &_cancel {
       float: left;
     }
 
-    &__confirm {
+    &_confirm {
       float: right;
     }
 
-    &__title {
+    &_title {
       text-align: center;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
     }
 
-    &__columns {
+    &_columns {
       display: flex;
       position: relative;
     }
 
-    &__frame {
+    &_frame {
       top: 50%;
       left: 0;
       width: 100%;
